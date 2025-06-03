@@ -1,0 +1,20 @@
+{
+  "name": "block37_recipe",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "db:schema": "psql -d recipez -f db/schema.sql",
+		"db:seed": "psql -d recipez -f db/seed.sql",
+		"db:reset": "npm run db:schema && npm run db:seed",
+		"dev": "node --watch --env-file=.env server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "express": "^5.1.0",
+    "pg": "^8.16.0"
+  }
+}
