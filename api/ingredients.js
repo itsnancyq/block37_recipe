@@ -4,14 +4,14 @@ export default router;
 
 import { getIngredients, getIngredientById, createIngredient, updateIngredient, deleteIngredient } from "#db/queries/ingredients";
 
-router.get("/ingredients")(async(req, res) => {
+router.get("/", async(req, res) => {
     const ingredients = await getIngredients();
     return res.send(ingredients);
 });
 
-router.get("/ingredients/:id")(async (req, res) => {
+router.get("/ingredients/:id", async (req, res) => {
     const id = req.params.id;
-    if(!Number.isInteger(id)){
+    if(!Number.isInteger(id) && id < 0){
         return res.status(400).send({error: "Please send a valid ingredient."});
     };
 
@@ -22,7 +22,7 @@ router.get("/ingredients/:id")(async (req, res) => {
     res.send(ingredient);
 });
 
-router.post("/ingredients")(async (req, res)=> {
+router.post("/ingredients", async (req, res)=> {
     if(!req.body){
         return res.status(400).send({error: "Missing req.body"});
     };
@@ -36,7 +36,7 @@ router.post("/ingredients")(async (req, res)=> {
     res.status(201).send(ingredient);
 });
 
-router.put("/ingredients/:id")(async (req, res) => {
+router.put("/ingredients/:id", async (req, res) => {
     const id = req.params.id;
     if(!req.body){
         return res.status(400).send({error: "Missing req.body"});
@@ -47,7 +47,7 @@ router.put("/ingredients/:id")(async (req, res) => {
         return res.status(404).send({error: "Missing requires fields."});
     };
 
-    if(!Number.isInteger(id)){
+    if(!Number.isInteger(id) && id < 0){
         return res.status(400).send({error: "Please send valid ingredient."});
     };
 
@@ -60,9 +60,9 @@ router.put("/ingredients/:id")(async (req, res) => {
     res.status(200).send(updated);
 });
 
-router.delete("/ingredients")(async (req, res) => {
+router.delete("/ingredients", async (req, res) => {
     const id = req.params.id;
-    if(!Number.isInteger(id)){
+    if(!Number.isInteger(id) && id < 0){
         res.status(400).send({error: "Please send a valid ingredient."});
     };
 

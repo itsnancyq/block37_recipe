@@ -2,12 +2,15 @@
   "name": "block37_recipe",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
+    "dev": "node --watch --env-file=.env server.js",
     "db:schema": "psql -d recipez -f db/schema.sql",
 		"db:seed": "psql -d recipez -f db/seed.sql",
-		"db:reset": "npm run db:schema && npm run db:seed",
-		"dev": "node --watch --env-file=.env server.js"
+		"db:reset": "npm run db:schema && npm run db:seed"
+  },
+  "imports": {
+    "#db/*": "./db/*.js"
   },
   "keywords": [],
   "author": "",

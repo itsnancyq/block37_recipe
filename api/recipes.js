@@ -2,16 +2,16 @@ import express from "express";
 const router = express.Router();
 export default router;
 
-import { getRecipes, createRecipe, getRecipeById, updateRecipe, deleteRecipe } from "../db/queries/recipes";
+import { getRecipes, createRecipe, getRecipeById, updateRecipe, deleteRecipe } from "#db/queries/recipes";
 
-router.get("/recipes")(async(req, res) => {
+router.get("/", async(req, res) => {
     const recipes = await getRecipes();
     return res.send(recipes);
 });
 
-router.get("/recipes/:id")(async (req, res) => {
+router.get("/:id", async (req, res) => {
     const id = req.params.id;
-    if(!Number.isInteger(id)){
+    if(!Number.isInteger(id) && id < 0){
         return res.status(400).send({error: "Please send a valid recipe."});
     };
 
@@ -22,7 +22,7 @@ router.get("/recipes/:id")(async (req, res) => {
     res.send(recipe);
 });
 
-router.post("/recipes")(async (req, res)=> {
+router.post("/", async (req, res)=> {
     if(!req.body){
         return res.status(400).send({error: "Missing req.body"});
     };
@@ -36,7 +36,7 @@ router.post("/recipes")(async (req, res)=> {
     res.status(201).send(recipe);
 });
 
-router.put("/recipes/:id")(async (req, res) => {
+router.put("/:id", async (req, res) => {
     const id = req.params.id;
     if(!req.body){
         return res.status(400).send({error: "Missing req.body"});
@@ -47,7 +47,7 @@ router.put("/recipes/:id")(async (req, res) => {
         return res.status(404).send({error: "Missing requires fields."});
     };
 
-    if(!Number.isInteger(id)){
+    if(!Number.isInteger(id) && id < 0){
         return res.status(400).send({error: "Please send valid recipe."});
     };
 
@@ -60,9 +60,9 @@ router.put("/recipes/:id")(async (req, res) => {
     res.status(200).send(updated);
 });
 
-router.delete("/recipes")(async (req, res) => {
+router.delete("/", async (req, res) => {
     const id = req.params.id;
-    if(!Number.isInteger(id)){
+    if(!Number.isInteger(id) && id < 0){
         res.status(400).send({error: "Please send a valid recipe."});
     };
 
